@@ -1,0 +1,26 @@
+[
+	{
+		"foodType": "Bakery",
+		"productName": "Chonga Bagel",
+		"saturatedFat": "10%",
+		"sodium": "22%"
+	},
+	{
+		"foodType": "Bakery",
+		"productName": "Banana Nut Bread",
+		"saturatedFat": "15%",
+		"sodium": "15%"
+	},
+	{
+		"foodType": "Bistro Boxes",
+		"productName": "Cheese & Fruit Bistro Box",
+		"saturatedFat": "50%",
+		"sodium": "20%"
+	},
+	{
+		"foodType": "Hot Breakfast",
+		"productName": "Bacon & Gouda Breakfast Sandwich",
+		"saturatedFat": "35%",
+		"sodium": "34%"
+	}
+]

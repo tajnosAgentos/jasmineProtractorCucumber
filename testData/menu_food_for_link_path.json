@@ -1,0 +1,26 @@
+[
+	{
+		"pageUrl": "http://www.starbucks.com/menu/catalog/product?food=bakery",
+		"productName": "Chonga Bagel",
+		"saturatedFat": "10%",
+		"sodium": "22%"
+	},
+	{
+		"pageUrl": "http://www.starbucks.com/menu/catalog/product?food=bakery",
+		"productName": "Banana Nut Bread",
+		"saturatedFat": "15%",
+		"sodium": "15%"
+	},
+	{
+		"pageUrl": "http://www.starbucks.com/menu/catalog/product?food=bistro-boxes",
+		"productName": "Cheese & Fruit Bistro Box",
+		"saturatedFat": "50%",
+		"sodium": "20%"
+	},
+	{
+		"pageUrl": "http://www.starbucks.com/menu/catalog/product?food=hot-breakfast",
+		"productName": "Bacon & Gouda Breakfast Sandwich",
+		"saturatedFat": "35%",
+		"sodium": "34%"
+	}
+]

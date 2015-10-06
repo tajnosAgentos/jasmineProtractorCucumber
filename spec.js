@@ -8,6 +8,11 @@ function clickAndOpenPage(xpath)
 }
 
 
+function clickByNameAndOpenPage(text)
+{
+	clickAndOpenPage("//*[contains(text(),'" + text + "')]");	
+}
+
 function initBrowser(url, width, height)
 {
 	browser.driver.manage().window().setSize(width, height);
@@ -18,10 +23,10 @@ function initBrowser(url, width, height)
 
 
 //////////////////////////////////////////////////
-xdescribe('Open page in 2048 x 2048', function() {
+describe('Open page in 2048 x 1024', function() {
 	
 	beforeEach(function() {
-		initBrowser('http://www.starbucks.com/', 2048, 2048);
+		initBrowser('http://www.starbucks.com/', 2048, 1024);
 	});
 		
 	it('Page loaded', function(){
@@ -30,6 +35,7 @@ xdescribe('Open page in 2048 x 2048', function() {
 		
 		
 	it('Top menu elements hidden', function(){
+		console.log('2048 x 1024 -> Top menu elements hidden');
 
 		var utilitiesItem1 = browser.driver.findElement(By.xpath("//*[@id=\"utilities\"]/ul/li[1]/a/span[1]"));
 		expect(utilitiesItem1.isDisplayed()).toBeFalsy();
@@ -40,7 +46,8 @@ xdescribe('Open page in 2048 x 2048', function() {
 	
 	
 	it('Top menu elements visible', function(){
-			
+		console.log('2048 x 1024 -> Top menu elements visible');
+		
 		var searchBox = browser.driver.findElement(By.xpath("//*[@id=\"searchbox\"]"));
 		expect(searchBox.isDisplayed()).toBeTruthy();
 		
@@ -60,6 +67,8 @@ xdescribe('Open page in 2048 x 2048', function() {
 	});
 	
 	it('Bottom menu elements visible', function(){
+		console.log('2048 x 1024 -> Bottom menu elements visible');
+		
 		var bottomMenuItem1 = browser.driver.findElement(By.xpath("//*[@id=\"footer\"]/div[2]/div/div/div/div[1]/ol/li[1]/a"));
 		expect(bottomMenuItem1.isDisplayed()).toBeTruthy();	
 		
@@ -71,7 +80,7 @@ xdescribe('Open page in 2048 x 2048', function() {
 
 
 //////////////////////////////////////////////////
-xdescribe('Open page in 200 x 200', function() {
+describe('Open page in 200 x 200', function() {
 	beforeEach(function() {
 		initBrowser('http://www.starbucks.com/', 200, 200);
 	});
@@ -82,6 +91,7 @@ xdescribe('Open page in 200 x 200', function() {
 		
 		
 	it('Top menu elements visible', function(){
+		console.log('200 x 200 -> Top menu elements visible');
 		
 		var utilitiesItem1 = browser.driver.findElement(By.xpath("//*[@id=\"utilities\"]/ul/li[1]/a/span[1]"));
 		expect(utilitiesItem1.isDisplayed()).toBeTruthy();
@@ -92,7 +102,8 @@ xdescribe('Open page in 200 x 200', function() {
 	
 	
 	it('Top menu elements hidden', function(){
-			
+		console.log('200 x 200 -> Top menu elements hidden');
+		
 		var searchBox = browser.driver.findElement(By.xpath("//*[@id=\"searchbox\"]"));
 		expect(searchBox.isDisplayed()).toBeFalsy();
 		
@@ -105,6 +116,8 @@ xdescribe('Open page in 200 x 200', function() {
 	});
 	
 	it('Bottom menu elements not visible', function(){
+		console.log('200 x 200 -> Bottom menu elements not visible');
+		
 		var bottomMenuItem1 = browser.driver.findElement(By.xpath("//*[@id=\"footer\"]/div[2]/div/div/div/div[1]/ol/li[1]/a"));
 		expect(bottomMenuItem1.isDisplayed()).toBeFalsy();	
 		
@@ -117,10 +130,10 @@ xdescribe('Open page in 200 x 200', function() {
 
 
 //////////////////////////////////////////////////
-xdescribe('Open page in 2048 x 2048 and check menu show/hide', function() {
+describe('Open page in 2048 x 2048 and check menu show/hide', function() {
 	
 	beforeEach(function() {
-		initBrowser('http://www.starbucks.com/', 2048, 2048);
+		initBrowser('http://www.starbucks.com/', 2048, 1024);
 	});
 		
 	it('Page loaded', function(){
@@ -129,6 +142,8 @@ xdescribe('Open page in 2048 x 2048 and check menu show/hide', function() {
 	
 	
 	it('Menu panel visible when mouse over element else not visible', function(){
+		
+		console.log('Menu panel visible when mouse over element else not visible');
 		
 		var panelMenuCoffeeButton = browser.driver.findElement(By.xpath("//*[@id=\"nav_coffee\"]/a/strong"));
 		browser.actions().mouseMove(panelMenuCoffeeButton).perform();
@@ -159,76 +174,119 @@ xdescribe('Open page in 2048 x 2048 and check menu show/hide', function() {
 //////////////////////////////////////////////////
 describe('Change page language', function() {
 	
-	beforeEach(function() {
-		initBrowser('http://www.starbucks.com/', 2048, 2048);
-	});
+	var regionTestData = require('./testData/regionChange.json');
+	
 		
+	var regionText = regionTestData[0].changeRegionText;
+	var regionPageTitle = regionTestData[0].pageTitle;
+	
+	initBrowser(regionTestData[0].pageUrl, 2048, 1024);
+	
 	it('Page loaded', function(){
 		expect(browser.driver.getTitle()).toEqual('Starbucks Coffee Company');
 	});
 	
-	it('GOTO language select site and select POLAND', function(){
+	regionTestData.forEach( function (data) {
+	
+		it('GOTO language select site and select '+data.region, function(){
+			
+			console.log('Change page language ->  GOTO language select site and select ' + data.region);
+			
+			clickByNameAndOpenPage(regionText);
+					
+			expect(browser.driver.getTitle()).toEqual(regionPageTitle);
+	
+			clickByNameAndOpenPage(data.region);
+	
+			expect(browser.driver.getTitle()).toEqual('Starbucks Coffee Company');
+			
+			expect(browser.driver.getCurrentUrl()).toEqual(data.pageUrl);
+			
+			regionText = data.changeRegionText;
+			regionPageTitle = data.pageTitle;
+		});
+	 });
+});
 
-		clickAndOpenPage("//*[contains(text(),'Change Region')]");//TODO data
+
+
+//not always works
+xdescribe('FROM RENDERED MENU   Menu -> ...', function() {
+	
+	var foodTestData = require('./testData/menu_food_for_rendered_menu.json');
+	
+	
+	initBrowser('http://www.starbucks.com/', 2048, 1024);
+		
+	it('Page loaded', function(){
+		expect(browser.driver.getTitle()).toEqual('Explore our Menu | Starbucks Coffee Company');
+	});
+	
+	foodTestData.forEach( function (data) {
+	
+		it('FOOD -> ' + data.foodType, function(){
+
+			console.log('FROM RENDERED MENU   Menu -> FOOD -> ' + data.productName);
+			
+			var item = browser.driver.findElement(By.xpath("//*[@id=\"nav_menu\"]/a/strong"));
+			
+			browser.actions().mouseMove(item).perform();
 				
-		expect(browser.driver.getTitle()).toEqual('Choose a location | Starbucks Coffee Company');
-
-		clickAndOpenPage("//*[contains(text(),'Polska (Poland)')]");//TODO data
-
-		expect(browser.driver.getTitle()).toEqual('Starbucks Coffee Company');
-		
-		expect(browser.driver.getCurrentUrl()).toEqual('http://www.starbucks.pl/');//TODO DATA
-		
-		
-		var menuItem = browser.driver.findElement(By.xpath("//*[@id=\"footer\"]/div[3]/div/div/div[1]/ul/li[1]/a"));
-		expect(menuItem.getText()).toEqual('Zmień region');//TODO data
+			browser.driver.sleep(600);
+			
+			
+			var oldPageTitle = browser.driver.getTitle();
+			
+			clickByNameAndOpenPage(data.foodType);
+			
+			
+			expect(browser.driver.getTitle()).not.toEqual(oldPageTitle);
+	
+			oldPageTitle = browser.driver.getTitle()
+				
+			
+			clickByNameAndOpenPage(data.productName);
+			
+			
+			expect(browser.driver.getTitle()).not.toEqual(oldPageTitle);
+			
+			var saturatedFat = browser.driver.findElement(By.xpath("//*[@id=\"overview\"]/div[2]/div/div[1]/table/tbody/tr[4]/td[2]"));
+			
+			expect(saturatedFat.getText()).toEqual(data.saturatedFat);
+			
+			var sodium = browser.driver.findElement(By.xpath("//*[@id=\"overview\"]/div[2]/div/div[1]/table/tbody/tr[7]/td[2]"));
+			
+			expect(sodium.getText()).toEqual(data.sodium);
+		});
 	});
 });
 
 
 
 
-xdescribe('Menu -> ...', function() {
+describe('FROM LINK   Menu -> ...', function() {
 	
-	beforeEach(function() {
-		initBrowser('http://www.starbucks.com/', 2048, 2048);
-	});
-		
-	it('Page loaded', function(){
-		expect(browser.driver.getTitle()).toEqual('Starbucks Coffee Company');
-	});
+	var foodTestData = require('./testData/menu_food_for_link_path.json');
 	
 	
-	//TODO mozna zrobic dataDriven tzn wszystkie dzieci z food wygladaja podobnie
-	it('FOOD -> ...', function(){
-
-		var menu = browser.driver.findElement(By.xpath("//*[@id=\"nav_menu\"]/a/strong"));
-		
-		browser.actions().mouseMove(menu).perform();
+	foodTestData.forEach( function (data) {
+	
+		it('FOOD -> ' + data.productName, function(){
+			console.log('FROM LINK   Menu -> FOOD -> ' + data.productName);
 			
-		browser.driver.sleep(500);
-		
-		var oldPageTitle = browser.driver.getTitle();
-		
-		clickAndOpenPage("//*[contains(text(),'Bakery')]");// TODO dane z pliku
-		
-		
-		expect(browser.driver.getTitle()).not.toEqual(oldPageTitle);
+			initBrowser(data.pageUrl, 2048, 1024);
 
-		oldPageTitle = browser.driver.getTitle()
+			browser.driver.sleep(300);
 			
-		
-		clickAndOpenPage("//*[contains(text(),'Chonga Bagel')]");// TODO dane z pliku
-		
-		
-		expect(browser.driver.getTitle()).not.toEqual(oldPageTitle);
-		
-		var saturatedFat = browser.driver.findElement(By.xpath("//*[@id=\"overview\"]/div[2]/div/div[1]/table/tbody/tr[4]/td[2]"));
-		
-		expect(saturatedFat.getText()).toEqual('10%');//TODO dane z pliku
-		
-		var sodium = browser.driver.findElement(By.xpath("//*[@id=\"overview\"]/div[2]/div/div[1]/table/tbody/tr[7]/td[2]"));
-		
-		expect(sodium.getText()).toEqual('22%');//TODO dane z pliku
+			clickByNameAndOpenPage(data.productName);
+			
+			var saturatedFat = browser.driver.findElement(By.xpath("//*[@id=\"overview\"]/div[2]/div/div[1]/table/tbody/tr[4]/td[2]"));
+			
+			expect(saturatedFat.getText()).toEqual(data.saturatedFat);
+			
+			var sodium = browser.driver.findElement(By.xpath("//*[@id=\"overview\"]/div[2]/div/div[1]/table/tbody/tr[7]/td[2]"));
+			
+			expect(sodium.getText()).toEqual(data.sodium);
+		});
 	});
 });

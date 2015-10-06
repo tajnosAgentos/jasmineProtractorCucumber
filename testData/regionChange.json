@@ -1,0 +1,42 @@
+[
+	{
+		"changeRegionText": "Change Region",
+		"region": "United States",
+		"pageUrl": "http://www.starbucks.com/",
+		"pageTitle": "Choose a location | Starbucks Coffee Company"
+	},
+	{
+		"changeRegionText": "Zmień region",
+		"region": "Polska (Poland)",
+		"pageUrl": "http://www.starbucks.pl/",
+		"pageTitle": "Wybierz lokalizację | Starbucks Coffee Company"
+	},
+	{
+		"changeRegionText": "Cambiar región",
+		"region": "Chile",
+		"pageUrl": "http://www.starbucks.cl/",
+		"pageTitle": "Elige una ubicación | Starbucks Coffee Company"
+	},
+	{
+		"changeRegionText": "Land wählen",
+		"region": "Deutschland (Germany)",
+		"pageUrl": "http://www.starbucks.de/",
+		"pageTitle": "Choose a location | Starbucks Coffee Company"
+	},
+	{
+		"changeRegionText": "Regio wijzigen",
+		"region": "Netherlands",
+		"pageUrl": "http://www.starbucks.nl/",
+		"pageTitle": "Kies een locatie | Starbucks Coffee Company"
+	}
+	
+	
+	,
+	{
+		"changeRegionText": "Zmień region",
+		"region": "Polska (Poland)",
+		"pageUrl": "http://www.starbucks.pl/",
+		"pageTitle": "Wybierz lokalizację | Starbucks Coffee Company"
+	}
+	
+]
