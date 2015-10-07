@@ -6,6 +6,7 @@ exports.config = {
 
 	specs: ['spec.js'],
 
+	
 	capabilities: {
 	    'browserName': 'chrome'
 	},
@@ -13,6 +14,10 @@ exports.config = {
 	jasmineNodeOpts: {
 		showColors: true
 	}
+	
+//	,
+//	defaultTimeoutInterval = 15000
+	
 //	,
 //	allScriptsTimeout: 1000
 }
