@@ -5,10 +5,13 @@ exports.config = {
 	seleniumAddress: 'http://localhost:4444/wd/hub',
 
 	specs: ['spec.js'],
-
+	
+//	 seleniumArgs: ['-Dwebdriver.ie.driver=node_modules/protractor/selenium/IEDriverServer.exe'],
 	
 	capabilities: {
-	    'browserName': 'chrome'
+//	    'browserName': 'firefox'
+//		'browserName': 'chrome'
+//		'browserName': 'internet explorer'
 	},
 
 	jasmineNodeOpts: {
