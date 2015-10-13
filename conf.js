@@ -10,7 +10,7 @@ exports.config = {
 	
 	capabilities: {
 //	    'browserName': 'firefox'
-//		'browserName': 'chrome'
+		'browserName': 'chrome'
 //		'browserName': 'internet explorer'
 	},
 
